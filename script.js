@@ -18,6 +18,7 @@ let cardsShowing = 0;
 let correctPairs = 0;
 let animals = ["cat", "monkey", "cat", "penguin", "penguin", "monkey"];
 let showingArr = [];
+
 // Function that reveals a picture associated with the card
 const revealCard = function (e) {
   const dataValue = e.target.dataset.cards;
@@ -33,69 +34,50 @@ const revealCard = function (e) {
     displayCard.style.backgroundColor = "#454545";
     showingArr.push(dataValue);
     cardsShowing++;
-    console.log(cardsShowing);
-    console.log(showingArr);
-    displayCard.removeEventListener("click", function (e) {
-      revealCard(e);
-      checkPair(e);
-    });
   }
 };
 
-const checkPair = function (e) {
+const setCorrect = function (selectionOne, selectionTwo) {
+  showingArr = [];
+  correctPairs++;
+  cardsShowing = 0;
+  document.querySelector(
+    `[data-cards='${selectionOne}']`
+  ).style.backgroundColor = "limegreen";
+  document.querySelector(
+    `[data-cards='${selectionTwo}']`
+  ).style.backgroundColor = "limegreen";
+};
+
+const checkPair = function () {
   if (cardsShowing === 2) {
     if (showingArr.includes("1") && showingArr.includes("5")) {
-      console.log("winner");
-      showingArr = [];
-      correctPairs++;
-      cardsShowing = 0;
-      document.querySelector("[data-cards='1']").style.backgroundColor =
-        "limegreen";
-      document.querySelector("[data-cards='5']").style.backgroundColor =
-        "limegreen";
+      setCorrect(1, 5);
     } else if (showingArr.includes("0") && showingArr.includes("2")) {
-      console.log("winner");
-      showingArr = [];
-      correctPairs++;
-      cardsShowing = 0;
-      document.querySelector("[data-cards='0']").style.backgroundColor =
-        "limegreen";
-      document.querySelector("[data-cards='2']").style.backgroundColor =
-        "limegreen";
+      setCorrect(0, 2);
     } else if (showingArr.includes("3") && showingArr.includes("4")) {
-      console.log("winner");
-      showingArr = [];
-      correctPairs++;
-      cardsShowing = 0;
-      document.querySelector("[data-cards='3']").style.backgroundColor =
-        "limegreen";
-      document.querySelector("[data-cards='4']").style.backgroundColor =
-        "limegreen";
+      setCorrect(3, 4);
     } else {
       setTimeout(function () {
         cardsShowing = 0;
-
-        document.querySelector(`[data-cards='${showingArr[0]}']`).innerHTML =
-          "";
-
-        document.querySelector(
+        const wrongCardZero = document.querySelector(
           `[data-cards='${showingArr[0]}']`
-        ).style.backgroundColor = "#ff6000";
-
-        document
-          .querySelector(`[data-cards='${showingArr[0]}']`)
-          .classList.remove("showing");
-
-        document.querySelector(`[data-cards='${showingArr[1]}']`).innerHTML =
-          "";
-
-        document.querySelector(
+        );
+        const wrongCardOne = document.querySelector(
           `[data-cards='${showingArr[1]}']`
-        ).style.backgroundColor = "#ff6000";
+        );
 
-        document
-          .querySelector(`[data-cards='${showingArr[1]}']`)
-          .classList.remove("showing");
+        wrongCardZero.innerHTML = "";
+
+        wrongCardZero.style.backgroundColor = "#ff6000";
+
+        wrongCardZero.classList.remove("showing");
+
+        wrongCardOne.innerHTML = "";
+
+        wrongCardOne.style.backgroundColor = "#ff6000";
+
+        wrongCardOne.classList.remove("showing");
 
         showingArr = [];
         // For each card that data number does not equal any of the numbers in correctArr reset to default orange
