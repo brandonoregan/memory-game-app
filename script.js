@@ -18,21 +18,28 @@ let cardsShowing = 0;
 let correctPairs = 0;
 let animals = ["cat", "monkey", "cat", "penguin", "penguin", "monkey"];
 let showingArr = [];
-
 // Function that reveals a picture associated with the card
 const revealCard = function (e) {
   const dataValue = e.target.dataset.cards;
   const displayCard = e.target.closest(".card");
 
-  displayCard.innerHTML = `
+  if (!displayCard.classList.contains("showing")) {
+    displayCard.classList.add("showing");
+
+    displayCard.innerHTML = `
     <img class="" src="img/${animals[dataValue]}.png" alt="Monkey">
     `;
 
-  displayCard.style.backgroundColor = "#454545";
-  showingArr.push(dataValue);
-  cardsShowing++;
-  console.log(cardsShowing);
-  console.log(showingArr);
+    displayCard.style.backgroundColor = "#454545";
+    showingArr.push(dataValue);
+    cardsShowing++;
+    console.log(cardsShowing);
+    console.log(showingArr);
+    displayCard.removeEventListener("click", function (e) {
+      revealCard(e);
+      checkPair(e);
+    });
+  }
 };
 
 const checkPair = function (e) {
@@ -75,12 +82,20 @@ const checkPair = function (e) {
           `[data-cards='${showingArr[0]}']`
         ).style.backgroundColor = "#ff6000";
 
+        document
+          .querySelector(`[data-cards='${showingArr[0]}']`)
+          .classList.remove("showing");
+
         document.querySelector(`[data-cards='${showingArr[1]}']`).innerHTML =
           "";
 
         document.querySelector(
           `[data-cards='${showingArr[1]}']`
         ).style.backgroundColor = "#ff6000";
+
+        document
+          .querySelector(`[data-cards='${showingArr[1]}']`)
+          .classList.remove("showing");
 
         showingArr = [];
         // For each card that data number does not equal any of the numbers in correctArr reset to default orange
