@@ -36,7 +36,6 @@ const revealCard = function (e) {
 };
 
 const checkPair = function (e) {
-  let whichCar = e.target.closest.card.dataset.cards;
   if (cardsShowing === 2) {
     if (showingArr.includes("1") && showingArr.includes("5")) {
       console.log("winner");
@@ -69,10 +68,19 @@ const checkPair = function (e) {
       setTimeout(function () {
         cardsShowing = 0;
 
-        allCards.forEach(function (c) {
-          c.innerHTML = "";
-          c.style.backgroundColor = "#ff6000";
-        });
+        document.querySelector(`[data-cards='${showingArr[0]}']`).innerHTML =
+          "";
+
+        document.querySelector(
+          `[data-cards='${showingArr[0]}']`
+        ).style.backgroundColor = "#ff6000";
+
+        document.querySelector(`[data-cards='${showingArr[1]}']`).innerHTML =
+          "";
+
+        document.querySelector(
+          `[data-cards='${showingArr[1]}']`
+        ).style.backgroundColor = "#ff6000";
 
         showingArr = [];
         // For each card that data number does not equal any of the numbers in correctArr reset to default orange
@@ -88,5 +96,5 @@ const checkPair = function (e) {
 //////////Events////////////
 cardContainer.addEventListener("click", function (e) {
   revealCard(e);
-  checkPair();
+  checkPair(e);
 });
