@@ -2,7 +2,6 @@
 // Game components
 /* 
 TODO
-- Make sure each card can only be clicked once
 - Create slider function
 
 
@@ -12,11 +11,17 @@ TODO
 const allCards = document.querySelectorAll(".card");
 const card = document.querySelector(".card");
 const cardContainer = document.querySelector(".card-container");
+const btnLeft = document.querySelector(".btn-left");
+const btnRight = document.querySelector(".btn-right");
+const gridContainerOne = document.querySelector(".grid-container--1");
+const gridContainerTwo = document.querySelector(".grid-container--2");
+const gridContainerThree = document.querySelector(".grid-container--3");
 
 //////////Functions/////////////
 let cardsShowing = 0;
 let correctPairs = 0;
 let animals = ["cat", "monkey", "cat", "penguin", "penguin", "monkey"];
+let animalsTwo = ["cat", "monkey", "cat", "penguin", "penguin", "monkey"];
 let showingArr = [];
 
 // Function that reveals a picture associated with the card
@@ -28,7 +33,7 @@ const revealCard = function (e) {
     displayCard.classList.add("showing");
 
     displayCard.innerHTML = `
-    <img class="" src="img/${animals[dataValue]}.png" alt="Monkey">
+    <img class="" src="img/${animals[dataValue]}.png" alt="${animals[dataValue]}}">
     `;
 
     displayCard.style.backgroundColor = "#454545";
@@ -66,21 +71,13 @@ const checkPair = function () {
         const wrongCardOne = document.querySelector(
           `[data-cards='${showingArr[1]}']`
         );
-
         wrongCardZero.innerHTML = "";
-
         wrongCardZero.style.backgroundColor = "#ff6000";
-
         wrongCardZero.classList.remove("showing");
-
         wrongCardOne.innerHTML = "";
-
         wrongCardOne.style.backgroundColor = "#ff6000";
-
         wrongCardOne.classList.remove("showing");
-
         showingArr = [];
-        // For each card that data number does not equal any of the numbers in correctArr reset to default orange
       }, 1000);
     }
   }
@@ -95,3 +92,42 @@ cardContainer.addEventListener("click", function (e) {
   revealCard(e);
   checkPair(e);
 });
+
+const slides = document.querySelectorAll(".slide");
+
+let currentSlide = 0;
+const maxSlide = slides.length;
+
+// Just used for implementing slider
+// const slider = document.querySelector(".slider");
+// slider.style.transform = "scale(0.4)";
+// slider.style.transform = "visible";
+
+const goToSlide = function (slide) {
+  slides.forEach(
+    (s, i) => (s.style.transform = `translateX(${200 * (i - slide)}%)`)
+  );
+};
+goToSlide(0);
+
+const nextSlide = function () {
+  if (currentSlide === maxSlide - 1) {
+    currentSlide = 0;
+  } else {
+    currentSlide++;
+  }
+
+  goToSlide(currentSlide);
+};
+
+const previousSlide = function () {
+  if (currentSlide === 0) {
+    currentSlide = maxSlide;
+  }
+  currentSlide--;
+  goToSlide(currentSlide);
+};
+
+btnRight.addEventListener("click", nextSlide);
+
+btnLeft.addEventListener("click", previousSlide);
