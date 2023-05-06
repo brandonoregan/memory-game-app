@@ -71,13 +71,13 @@ const revealCard = function (e) {
   }
 };
 
-const setCorrect = function (selectionOne, selectionTwo) {
+const setCorrect = function () {
   correctPairs++;
   cardsShowing = 0;
-  const data = document.querySelectorAll(`[data-cards]`);
-  data.forEach((card) => {
+  allCards.forEach((card) => {
     if (card.classList.contains("showing")) {
       card.style.backgroundColor = "limegreen";
+      card.classList.add("correct");
     }
   });
   showingArr = [];
@@ -85,57 +85,50 @@ const setCorrect = function (selectionOne, selectionTwo) {
 
 const wrongPair = function () {
   setTimeout(function () {
+    allCards.forEach((card) => {
+      if (
+        card.classList.contains("showing") &&
+        !card.classList.contains("correct")
+      ) {
+        card.innerHTML = "";
+        card.style.backgroundColor = "#ff6000";
+        card.classList.remove("showing");
+      }
+    });
     cardsShowing = 0;
-    const wrongCardZero = document.querySelector(
-      `[data-cards='${showingArr[0]}']`
-    );
-    const wrongCardOne = document.querySelector(
-      `[data-cards='${showingArr[1]}']`
-    );
-    wrongCardZero.innerHTML = "";
-    wrongCardZero.style.backgroundColor = "#ff6000";
-    wrongCardZero.classList.remove("showing");
-    wrongCardOne.innerHTML = "";
-    wrongCardOne.style.backgroundColor = "#ff6000";
-    wrongCardOne.classList.remove("showing");
     showingArr = [];
   }, 1000);
 };
 
 const gridCheckOne = function () {
   if (showingArr.includes("1") && showingArr.includes("5")) {
-    setCorrect(showingArr[1], showingArr[0]);
+    setCorrect();
   } else if (showingArr.includes("0") && showingArr.includes("2")) {
-    setCorrect(showingArr[1], showingArr[0]);
+    setCorrect();
   } else if (showingArr.includes("3") && showingArr.includes("4")) {
-    setCorrect(showingArr[1], showingArr[0]);
+    setCorrect();
   } else {
     wrongPair();
   }
 };
 const gridCheckTwo = function () {
   if (showingArr.includes("0") && showingArr.includes("4")) {
-    console.log(showingArr);
-    setCorrect(showingArr[1] + 6, showingArr[0] + 6);
-    console.log(showingArr[1] + 6);
+    setCorrect();
   } else if (showingArr.includes("1") && showingArr.includes("3")) {
-    setCorrect(showingArr[1], showingArr[0]);
-    console.log("correct TWO");
+    setCorrect();
   } else if (showingArr.includes("2") && showingArr.includes("5")) {
-    setCorrect(showingArr[1], showingArr[0]);
-    console.log("correct THREE");
+    setCorrect();
   } else {
     wrongPair();
-    console.log("wrong pair");
   }
 };
 const gridCheckThree = function () {
   if (showingArr.includes("1") && showingArr.includes("5")) {
-    setCorrect(showingArr[1], showingArr[0]);
+    setCorrect();
   } else if (showingArr.includes("0") && showingArr.includes("2")) {
-    setCorrect(showingArr[1], showingArr[0]);
+    setCorrect();
   } else if (showingArr.includes("3") && showingArr.includes("4")) {
-    setCorrect(showingArr[1], showingArr[0]);
+    setCorrect();
   } else {
     wrongPair();
   }
