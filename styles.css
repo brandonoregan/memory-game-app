@@ -63,9 +63,9 @@ body {
   padding-top: 1rem;
 }
 
+.grid-container--0,
 .grid-container--1,
-.grid-container--2,
-.grid-container--3 {
+.grid-container--2 {
   position: relative;
   display: grid;
   grid-template-columns: repeat(3, 250px);
@@ -175,17 +175,17 @@ button:hover {
   /* overflow: hidden; */
 }
 
-.grid-container--1 {
+.grid-container--0 {
   transform: translateX(0%);
   position: absolute;
   overflow: hidden;
 }
 
-.grid-container--2 {
+.grid-container--1 {
   transform: translateX(200%);
   position: absolute;
 }
 
-.grid-container--3 {
+.grid-container--2 {
   transform: translateX(400%);
 }
