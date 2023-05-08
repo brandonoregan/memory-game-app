@@ -2,7 +2,7 @@
 // Game components
 /* 
 TODO
-- Create slider function
+- Finsih the game when the last slide in complete 
 
 
 */
@@ -23,66 +23,48 @@ let correctPairs = 0;
 let animals0 = ["cat", "monkey", "cat", "penguin", "penguin", "monkey"];
 let animals1 = ["monkey", "cat", "penguin", "cat", "monkey", "penguin"];
 let animals2 = ["cat", "monkey", "cat", "penguin", "penguin", "monkey"];
-// let showingArr = [];
-let matchingPairs0 = [
-  [0, 2],
-  [1, 5],
-  [3, 4],
-];
-let matchingPairs1 = [
-  [0, 4],
-  [1, 3],
-  [2, 5],
-];
-let matchingPairs2 = [
-  [0, 2],
-  [1, 5],
-  [3, 4],
-];
+let showingArr = [];
 
 // Function that reveals a picture associated with the card
 const revealCard = function (e) {
   const dataValue = e.target.dataset.cards;
   const displayCard = e.target.closest(".card");
 
-  if (!displayCard.classList.contains("showing") && currentSlide === 0) {
-    let animals = animals0;
-    // let animals = `animals${currentSlide}`;
-    displayCard.classList.add("showing");
+  if (!displayCard.classList.contains("showing")) {
+    if (currentSlide === 0) {
+      let animals = animals0;
+      displayCard.classList.add("showing");
 
-    displayCard.innerHTML = `
+      displayCard.innerHTML = `
     <img class="" src="img/${animals[dataValue]}.png" alt="${animals[dataValue]}}">
     `;
 
-    displayCard.style.backgroundColor = "#454545";
-    showingArr.push(dataValue);
-    cardsShowing++;
-  }
-  if (!displayCard.classList.contains("showing") && currentSlide === 1) {
-    let animals = animals1;
-    // let animals = `animals${currentSlide}`;
-    displayCard.classList.add("showing");
+      displayCard.style.backgroundColor = "#454545";
+      showingArr.push(dataValue);
+      cardsShowing++;
+    } else if (currentSlide === 1) {
+      let animals = animals1;
+      displayCard.classList.add("showing");
 
-    displayCard.innerHTML = `
+      displayCard.innerHTML = `
     <img class="" src="img/${animals[dataValue]}.png" alt="${animals[dataValue]}}">
     `;
 
-    displayCard.style.backgroundColor = "#454545";
-    showingArr.push(dataValue);
-    cardsShowing++;
-  }
-  if (!displayCard.classList.contains("showing") && currentSlide === 2) {
-    let animals = animals2;
-    // let animals = `animals${currentSlide}`;
-    displayCard.classList.add("showing");
+      displayCard.style.backgroundColor = "#454545";
+      showingArr.push(dataValue);
+      cardsShowing++;
+    } else if (currentSlide === 2) {
+      let animals = animals2;
+      displayCard.classList.add("showing");
 
-    displayCard.innerHTML = `
+      displayCard.innerHTML = `
     <img class="" src="img/${animals[dataValue]}.png" alt="${animals[dataValue]}}">
     `;
 
-    displayCard.style.backgroundColor = "#454545";
-    showingArr.push(dataValue);
-    cardsShowing++;
+      displayCard.style.backgroundColor = "#454545";
+      showingArr.push(dataValue);
+      cardsShowing++;
+    }
   }
 };
 
@@ -118,8 +100,6 @@ const wrongPair = function () {
 
 // ///////////////////Experiment function
 // Goal: does what is in the showing array match one of the winning combinations for the array
-
-let showingArr = [8, 2];
 
 // Variable that stores boolean value looping through the matching pairs array and seeing the element values match the chosen cards values
 // const compareArr = matchingPairs0.forEach(function (arr) {
@@ -209,8 +189,10 @@ const checkWinner = function () {
         document.querySelector(".winner").innerHTML = "";
       }, 1000);
     } else if (currentSlide === 2) {
+      setTimeout(() => {
+        location.reload();
+      }, 3000);
       document.querySelector(".winner").innerHTML = "Game over, well done!";
-      clearBoard();
     }
   }
 };
@@ -248,7 +230,6 @@ const nextSlide = function () {
   }
   clearBoard();
   goToSlide(currentSlide);
-  console.log(currentSlide);
 };
 
 const previousSlide = function () {
