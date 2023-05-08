@@ -23,7 +23,22 @@ let correctPairs = 0;
 let animals0 = ["cat", "monkey", "cat", "penguin", "penguin", "monkey"];
 let animals1 = ["monkey", "cat", "penguin", "cat", "monkey", "penguin"];
 let animals2 = ["cat", "monkey", "cat", "penguin", "penguin", "monkey"];
-let showingArr = [];
+// let showingArr = [];
+let matchingPairs0 = [
+  [0, 2],
+  [1, 5],
+  [3, 4],
+];
+let matchingPairs1 = [
+  [0, 4],
+  [1, 3],
+  [2, 5],
+];
+let matchingPairs2 = [
+  [0, 2],
+  [1, 5],
+  [3, 4],
+];
 
 // Function that reveals a picture associated with the card
 const revealCard = function (e) {
@@ -81,6 +96,7 @@ const setCorrect = function () {
     }
   });
   showingArr = [];
+  checkWinner();
 };
 
 const wrongPair = function () {
@@ -97,8 +113,33 @@ const wrongPair = function () {
     });
     cardsShowing = 0;
     showingArr = [];
-  }, 1000);
+  }, 200);
 };
+
+// ///////////////////Experiment function
+// Goal: does what is in the showing array match one of the winning combinations for the array
+
+let showingArr = [8, 2];
+
+// Variable that stores boolean value looping through the matching pairs array and seeing the element values match the chosen cards values
+// const compareArr = matchingPairs0.forEach(function (arr) {
+//   return arr === showingArr;
+// });
+
+// const compareArr = (arr1, arr2) => {
+//   arr2.forEach(function (a) {
+//     if (JSON.stringify(a) === JSON.stringify(arr1)) tr
+//   });
+
+// console.log(JSON.stringify(arr1));
+// console.log(JSON.stringify(arr2));
+// console.log(JSON.stringify(arr1) === JSON.stringify(arr2));
+
+// let newArr1 = arr1.map((el) => +el);
+// let newArr2 = arr2.map((el) => +el);
+// };
+
+// compareArr(showingArr, matchingPairs0);
 
 const gridCheckOne = function () {
   if (showingArr.includes("1") && showingArr.includes("5")) {
@@ -157,6 +198,21 @@ const clearBoard = function () {
     card.style.backgroundColor = "#ff6000";
     card.classList.remove("showing");
   });
+};
+
+const checkWinner = function () {
+  if (correctPairs === 3) {
+    if (currentSlide === 0 || currentSlide === 1) {
+      document.querySelector(".winner").innerHTML = "We have a winner";
+      setTimeout(function () {
+        nextSlide();
+        document.querySelector(".winner").innerHTML = "";
+      }, 1000);
+    } else if (currentSlide === 2) {
+      document.querySelector(".winner").innerHTML = "Game over, well done!";
+      clearBoard();
+    }
+  }
 };
 //////////Events////////////
 cardContainer.addEventListener("click", function (e) {

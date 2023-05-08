@@ -189,3 +189,9 @@ button:hover {
 .grid-container--2 {
   transform: translateX(400%);
 }
+
+h3 {
+  margin: 3rem;
+  font-size: 3rem;
+  color: black;
+}
